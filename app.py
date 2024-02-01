@@ -1,8 +1,9 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
-# from sklearn.externals import joblib (joblib已经被移动到了一个独立的包中，不再包含在sklearn.externals中)
+from sklearn.model_selection import train_test_split
+
 import joblib
 
 app = Flask(__name__)
@@ -24,17 +25,10 @@ def predict():
     cv = CountVectorizer()
     X = cv.fit_transform(X)
 
-    from sklearn.model_selection import train_test_split
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
 
     clf = MultinomialNB()
     clf.fit(X_train, y_train)
-    clf.score(X_test, y_test)
-
-    # Alternative Usage of Saved Model
-    # joblib.dump(clf, 'NB_spam_model.pkl')
-    # NB_spam_model = open('NB_spam_model.pkl', 'rb')
-    # clf = joblib.load(NB_spam_model)
 
     if request.method == 'POST':
         message = request.form['message']
@@ -42,7 +36,7 @@ def predict():
         vect = cv.transform(data).toarray()
         my_prediction = clf.predict(vect)
 
-    return render_template('result.html', prediction=my_prediction)
+        return jsonify({'prediction': int(my_prediction[0])})
 
 if __name__ == '__main__':
     app.run(debug=True)

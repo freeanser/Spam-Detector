@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-
-<html>
+<html lang="en">
 
 <head>
-  <title>Home</title>
-  <!-- <link rel="stylesheet" type="text/css" href="../static/css/styles.css"> -->
-  <link rel="'stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spam Detector</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
 </head>
 
 <body>
@@ -20,14 +22,14 @@
   </header>
 
   <div class="ml-container">
-    <form action="{{ url_for('predict')}}" method="POST">
+    <form id="predictionForm">
       <p>Enter Your Message Here</p>
-      <!-- <input type="text" name="comment" /> -->
-      <textarea name="message" rows="4" cols="50"></textarea>
+      <textarea id="messageInput" name="message" rows="4" cols="50"></textarea>
       <br />
-
-      <input type="submit" class="btn-info" value="Predict">
+      <input type="button" class="btn-info" value="Predict" onclick="predict()">
     </form>
+    <div id="loading" style="display: none;">Processing...</div>
+    <div id="resultContainer"></div>
   </div>
 
 </body>
