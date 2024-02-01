@@ -1,16 +1,17 @@
 from flask import Flask, render_template, request, jsonify
+from flask_socketio import SocketIO
+
 import pandas as pd
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.naive_bayes import MultinomialNB
 from sklearn.model_selection import train_test_split
 
-import joblib
-
 app = Flask(__name__)
+socketio = SocketIO(app)
 
 @app.route('/')
 def home():
-    return render_template('home.html')
+    return render_template('home_with_chat.html')  # 修改為包含聊天框的 HTML
 
 @app.route('/predict', methods=['POST'])
 def predict():
@@ -36,7 +37,9 @@ def predict():
         vect = cv.transform(data).toarray()
         my_prediction = clf.predict(vect)
 
+        socketio.emit('response', {'prediction': int(my_prediction[0])})  # 使用 SocketIO 發送預測結果
+
         return jsonify({'prediction': int(my_prediction[0])})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    socketio.run(app, debug=True)

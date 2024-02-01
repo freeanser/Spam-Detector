@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spam Detector with Chat</title>
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"></script>
+  <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+</head>
+
+<body>
+
+  <header>
+    <div class="container">
+      <div id="brandname">
+        Machine Learning App with Flask
+      </div>
+      <h2>Spam Detector For SMS Messages</h2>
+    </div>
+  </header>
+
+  <div class="ml-container">
+    <form id="predictionForm">
+      <p>Enter Your Message Here</p>
+      <textarea id="messageInput" name="message" rows="4" cols="50"></textarea>
+      <br />
+      <input type="button" class="btn-info" value="Predict" onclick="predict()">
+    </form>
+    <div id="loading" style="display: none;">Processing...</div>
+    <div id="resultContainer"></div>
+
+    <div id="chatBox">
+      <h3>Chat Box</h3>
+      <ul id="chatList"></ul>
+    </div>
+  </div>
+
+  <script>
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
+
+    socket.on('response', function (data) {
+      displayResult(data.prediction);
+    });
+
+    function predict() {
+      var message = $('#messageInput').val();
+
+      $.ajax({
+        type: 'POST',
+        url: '/predict',
+        data: { 'message': message },
+        beforeSend: function () {
+          $('#loading').show();
+        },
+        success: function (response) {
+          $('#loading').hide();
+          displayResult(response.prediction);
+
+          // Add the user's message to the chat list
+          $('#chatList').append('<li>User: ' + message + '</li>');
+
+          // Add the bot's response to the chat list
+          $('#chatList').append('<li>Bot: ' + response.prediction + '</li>');
+        },
+        error: function (error) {
+          $('#loading').hide();
+          console.log('Error:', error);
+        }
+      });
+    }
+
+    function displayResult(prediction) {
+      var resultContainer = $('#resultContainer');
+      resultContainer.empty();
+
+      if (prediction == 1) {
+        resultContainer.append('<h2 style="color: red;">Spam</h2>');
+      } else {
+        resultContainer.append('<h2 style="color: blue;">Not a Spam (It is a Ham)</h2>');
+      }
+    }
+  </script>
+
+</body>
+
+</html>
