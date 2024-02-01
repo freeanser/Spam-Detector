@@ -14,142 +14,26 @@
 </head>
 
 <body>
-
   <header>
     <div class="container">
-      <!-- <div id="brandname">
-        Machine Learning App with Flask
-      </div> -->
       <h2>Spam Detector For SMS Messages</h2>
     </div>
   </header>
+  <div id="resultContainer" class="results"></div>
 
   <div class="ml-container">
-
-
-    <div id="chatBox">
-      <h3>Chat Box</h3>
-      <!-- <p id="currentUser">You</p> -->
-      <ul id="chatList">
-      </ul>
-    </div>
-    <div id="resultContainer"></div>
-
-    <form id="predictionForm">
-      <p>Enter Your Message Here</p>
-      <textarea id="messageInput" name="message" rows="4" cols="50"></textarea>
-      <br />
-      <input type="button" class="btn-info" value="Predict" onclick="predict()">
-    </form>
-    <div id="loading" style="display: none;">Processing...</div>
-
-
-  </div>
-
-  <style>
-    #chatList li {
-      padding: 5px;
-      margin-bottom: 5px;
-    }
-
-    #chatList li.user {
-      background-color: #f2f2f2;
-    }
-
-    #chatList li.bot {
-      background-color: #e0e0e0;
-    }
-  </style>
-
-</body>
-
-</html>
-
-
-<!-- <!DOCTYPE html>
-<html lang="en">
-
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Spam Detector with Chat</title>
-  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
-  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js"></script>
-  <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
-</head>
-
-<body>
-
-  <header>
-    <div class="container">
-      <div id="brandname">
-        Machine Learning App with Flask
-      </div>
-      <h2>Spam Detector For SMS Messages</h2>
-    </div>
-  </header>
-
-  <div class="ml-container">
-    <form id="predictionForm">
-      <p>Enter Your Message Here</p>
-      <textarea id="messageInput" name="message" rows="4" cols="50"></textarea>
-      <br />
-      <input type="button" class="btn-info" value="Predict" onclick="predict()">
-    </form>
-    <div id="loading" style="display: none;">Processing...</div>
-    <div id="resultContainer"></div>
-
     <div id="chatBox">
       <h3>Chat Box</h3>
       <ul id="chatList"></ul>
     </div>
+
+    <form id="predictionForm">
+      <textarea id="messageInput" name="message" rows="4" cols="50" placeholder="Enter Your Message Here"></textarea>
+      <br />
+      <input type="button" class="btn-info" value="Predict" onclick="predict()">
+    </form>
+    <div id="loading" style="display: none;">Processing...</div>
   </div>
-
-  <script>
-    var socket = io.connect('http://' + document.domain + ':' + location.port);
-
-    socket.on('response', function (data) {
-      displayResult(data.prediction);
-      // 添加對話紀錄
-      $('#chatList').append('<li>User: ' + message + '</li>');
-      $('#chatList').append('<li>Bot: ' + (data.prediction == 1 ? 'Spam' : 'Not a Spam (It is a Ham)') + '</li>');
-    });
-
-    function predict() {
-      var message = $('#messageInput').val();
-
-      $.ajax({
-        type: 'POST',
-        url: '/predict',
-        data: { 'message': message },
-        beforeSend: function () {
-          $('#loading').show();
-        },
-        success: function (response) {
-          $('#loading').hide();
-          displayResult(response.prediction);
-
-          // 添加用戶消息到對話紀錄
-          $('#chatList').append('<li>User: ' + message + '</li>');
-        },
-        error: function (error) {
-          $('#loading').hide();
-          console.log('Error:', error);
-        }
-      });
-    }
-
-    function displayResult(prediction) {
-      var resultContainer = $('#resultContainer');
-      resultContainer.empty();
-
-      var resultText = (prediction == 1) ? 'Spam' : 'Not a Spam (It is a Ham)';
-
-      resultContainer.append('<h2 style="color: ' + (prediction == 1 ? 'red' : 'blue') + ';">' + resultText + '</h2>');
-    }
-  </script>
-
 </body>
 
-</html> -->
+</html>

@@ -3,7 +3,7 @@
 const currentUser = 'You';
 
 function predict() {
-  var message = $('#messageInput').val();
+  let message = $('#messageInput').val();
 
   $.ajax({
     type: 'POST',
@@ -16,7 +16,7 @@ function predict() {
       $('#loading').hide();
       displayResult(response.prediction);
 
-      const predictionText = response.prediction == 1 ? 'Spam' : 'Not a Spam (It is a Ham)';
+      const predictionText = response.prediction == 1 ? 'This is a Spam.' : 'It is a Ham.';
       $('#chatList').append(`<li class="user" id="${currentUser}">${currentUser}: <br> ${message}</li>`);
       $('#chatList').append(`<li class="bot">Bot: <br>${predictionText}</li>`);
     },
@@ -28,10 +28,10 @@ function predict() {
 }
 
 function displayResult(prediction) {
-  var resultContainer = $('#resultContainer');
+  let resultContainer = $('#resultContainer');
   resultContainer.empty();
 
-  var resultText = (prediction == 1) ? 'Spam' : 'Not a Spam (It is a Ham)';
+  let resultText = (prediction == 1) ? 'This is a Spam.' : 'It is a Ham.';
 
   resultContainer.append('<h2 style="color: ' + (prediction == 1 ? 'red' : 'blue') + ';">' + resultText + '</h2>');
 }
