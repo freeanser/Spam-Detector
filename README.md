@@ -1,4 +1,4 @@
-![Alt文本](images/spam-detector.jpg)
+![Alt文本](https://raw.githubusercontent.com/freeanser/spam-detector/main/images/spam-detector.jpg)
 
 # Spam Detector with Chat
 
