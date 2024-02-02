@@ -18,7 +18,7 @@ def home():
 @app.route('/predict', methods=['POST'])
 def predict():
 
-    
+
     # 從名為'spam.csv'的CSV文件讀取數據，使用Pandas庫將其轉換為數據框（DataFrame）
     df = pd.read_csv('spam.csv', encoding="latin-1")
 
@@ -60,6 +60,14 @@ def predict():
         socketio.emit('response', {'prediction': int(my_prediction[0])})  
 
         return jsonify({'prediction': int(my_prediction[0])})
+
+# 新增 Socket.IO 事件處理函數
+@socketio.on('user_prediction')
+def handle_user_prediction(data):
+    prediction = data['prediction']
+    message = data['message']
+    # 在這裡處理用戶的預測，你可以將結果發送給所有連接的客戶端，例如：
+    socketio.emit('broadcast_result', {'prediction': prediction, 'message': message}, broadcast=True)
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)

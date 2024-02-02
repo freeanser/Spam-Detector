@@ -1,6 +1,7 @@
 // scripts.js
 
 const currentUser = 'You';
+const socket = io.connect('http://your-server-address');
 
 function predict() {
   let message = $('#messageInput').val();
@@ -19,6 +20,8 @@ function predict() {
       const predictionText = response.prediction == 1 ? 'This is a Spam.' : 'It is a Ham.';
       $('#chatList').append(`<li class="user" id="${currentUser}">${currentUser}: <br> ${message}</li>`);
       $('#chatList').append(`<li class="bot">Bot: <br>${predictionText}</li>`);
+      // 使用 socket.emit 發送預測結果到伺服器
+      socket.emit('user_prediction', { prediction: response.prediction, message: message });
     },
     error: function (error) {
       $('#loading').hide();
