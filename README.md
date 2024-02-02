@@ -1,5 +1,3 @@
-![Alt文本](https://raw.githubusercontent.com/freeanser/spam-detector/main/images/spam-detector.jpg)
-
 # Spam Detector with Chat
 
 This project is a simple web application that combines a spam detection model with a chat interface. It utilizes Flask for the backend, SocketIO for real-time communication, and a Naive Bayes classifier for spam detection. The frontend is built with HTML, CSS, and JavaScript.
