@@ -1,10 +1,7 @@
-/* styles.css */
-
 body {
   font: 15px/1.5 Arial, Helvetica, sans-serif;
   padding: 0;
   background-color: #ede7e4;
-  /* 溫柔的木質色調 */
 }
 
 .container {
@@ -15,97 +12,33 @@ body {
 
 header {
   background: #d1b8b2;
-  /* 溫柔的淺紅色調 */
   border-bottom: #b9918c 3px solid;
   height: 120px;
   width: 100%;
   padding-top: 30px;
 }
 
-.main-header {
-  text-align: center;
-  background-color: #d1b8b2;
-  /* 溫柔的淺紅色調 */
-  height: 100px;
-  width: 100%;
-  margin: 0;
-}
-
-#brandname {
-  float: left;
-  font-size: 30px;
-  color: #544a47;
-  /* 深木質色調 */
-  margin: 10px;
-}
-
-header h2 {
-  text-align: center;
-  color: #544a47;
-  /* 深木質色調 */
-}
-
-.btn-info {
-  background-color: #c6b09f;
-  /* 溫柔的淺褐色調 */
-  height: 40px;
-  width: 100px;
-}
-
-/* Brown */
-.btn-info:hover {
-  background: #a8917c;
-  /* 較深的褐色調 */
-}
-
-.results {
-  border-radius: 15px 50px;
-  background: #FFF7E8;
-  /* 淺灰色背景 */
-  padding: 20px;
-  /* width: 200px; */
-  height: 80px;
-  max-width: 400px;
-  margin: 20px auto;
-  text-align: center;
-  /* 文字置中 */
-}
-
-
-#predictionForm {
-  text-align: center;
-}
-
-#predictionForm p,
-#predictionForm textarea,
-#predictionForm input {
-  display: block;
-  margin: 10px auto;
-  /* 將元素置中 */
-}
-
-#predictionForm textarea {
-  width: 80%;
-  /* 調整寬度 */
-}
-
 #chatBox {
   position: relative;
   margin: 0 auto;
   width: 80%;
+  height: 300px;
+  /* 保留對話框高度設置 */
+  overflow-y: scroll;
+  margin-bottom: 20px;
 }
 
 #chatBox h3 {
   position: absolute;
   left: 0;
   top: -50px;
-  /* 設置負的 top 值以提高位置 */
 }
 
 #chatList {
   list-style-type: none;
   padding: 0;
   text-align: left;
+  overflow-y: auto;
 }
 
 #chatList li {
@@ -121,4 +54,44 @@ header h2 {
 
 #chatList li.bot {
   background-color: #d7c2bd;
+}
+
+#predictionForm {
+  text-align: center;
+  position: fixed;
+  bottom: 0;
+  width: 80%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #f9f9f9;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+#messageInput {
+  width: calc(100% - 20px);
+  /* 跟#predictionForm一樣寬 */
+  padding: 5px;
+  margin: 5px;
+  box-sizing: border-box;
+}
+
+.btn-info {
+  background-color: #c6b09f;
+  height: 40px;
+  width: 100px;
+}
+
+.btn-info:hover {
+  background: #a8917c;
+}
+
+.results {
+  border-radius: 15px 50px;
+  background: #FFF7E8;
+  padding: 20px;
+  height: 80px;
+  max-width: 400px;
+  margin: 20px auto;
+  text-align: center;
 }
